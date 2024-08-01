@@ -6,3 +6,19 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        Int     @id @default(autoincrement())
+  username  String @unique
+  password  String
+  email     String @unique
+  files     File[]
+}
+
+model File {
+  id        Int     @id @default(autoincrement())
+  author    User    @relation(fields: [authorId], references: [id])
+  authorId  Int
+}
+
+
