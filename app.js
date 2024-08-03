@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const expressSession = require("express-session");
+const passport = require("passport");
 const { PrismaSessionStore } = require("@quixo3/prisma-session-store");
 const { PrismaClient } = require("@prisma/client");
 
@@ -26,6 +27,16 @@ app.use(
     }),
   })
 );
+
+app.use(passport.session());
+require("./config/passport");
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(function (req, res, next) {
+  res.locals.login = false;
+  next();
+});
 
 app.use(indexRouter);
 

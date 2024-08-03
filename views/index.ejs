@@ -3,8 +3,12 @@
     <title><%= title %></title>
   </head>
   <body>
-    <h1>Hello World</h1>
+    <%if(login){%>
+    <h1>You are logged in!</h1>
+    <%}else{%>
+    <h1>You are not logged in!</h1>
     <a href="/sign-up"><button>Create an account</button></a>
     <a href="/log-in"><button>Log In</button></a>
+    <%}%>
   </body>
 </html>
