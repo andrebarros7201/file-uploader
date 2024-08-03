@@ -34,7 +34,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use(function (req, res, next) {
-  res.locals.login = false;
+  res.locals.login = req.isAuthenticated();
   next();
 });
 

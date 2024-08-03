@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const { body, validationResult } = require("express-validator");
+const passport = require("passport");
 const bcrypt = require("bcryptjs");
 const { PrismaClient } = require("@prisma/client");
 
@@ -60,3 +61,23 @@ exports.postSignUp = [
     });
   }),
 ];
+
+exports.getLogIn = asyncHandler(async (req, res) => {
+  res.render("log-in", { title: "Log In" });
+});
+
+exports.postLogIn = asyncHandler(async (req, res, next) => {
+  passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/log-in",
+  })(req, res, next);
+});
+
+exports.getLogOut = asyncHandler(async (req, res) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
